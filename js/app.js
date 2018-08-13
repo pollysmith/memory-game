@@ -33,20 +33,32 @@ function shuffle(array) {
  document.addEventListener('click', function () {
     console.log('The document was clicked');
  }, true);
-const card = $(".card")
-card.click(function(){
-    $(this).toggleClass("open show");
-    console.log('open show was added');
-    $(this).toggleClass("fa");
+
+const deck = document.querySelector(".deck");
+console.log(deck);
+
+deck.addEventListener('click', event => {
+    const clickTarget = event.target;
+    if (clickTarget.classList.contains('card')) {
+        console.log("I'm a card!");
+    }
 });
 
-$(".card").click(function(){
-    
-    $("")
+deck.addEventListener('click', event => {
+    const clickTarget = event.target;
+    if (clickTarget.classList.contains('card')) {
+    clickTarget.classList.toggle("open");
+    clickTarget.classList.toggle("show");
+    console.log('open show was toggled');
+    }
 });
+
 
 /*  - display the card's symbol (put this functionality in another function that you call from this one)
  *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
+ */
+ let toggledCards = [];
+ /* 
  *  - if the list already has another card, check to see if the two cards match
  *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
  *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
