@@ -1,6 +1,6 @@
 /*
  * Create a list that holds all of your cards
- */
+ *
 var arr = ['diamond','diamond', 'paper-plane','paper-plane','anchor', 'anchor', 'bolt', 'bolt', 'cube', 'cube','leaf','leaf','bicycle','bicycle','bomb','bomb'];
 arr = shuffle(arr);
 console.log(arr);
@@ -37,33 +37,63 @@ function shuffle(array) {
 const deck = document.querySelector(".deck");
 console.log(deck);
 
-deck.addEventListener('click', event => {
-    const clickTarget = event.target;
-    if (clickTarget.classList.contains('card')) {
-        console.log("I'm a card!");
-    }
-});
+
 
 deck.addEventListener('click', event => {
     const clickTarget = event.target;
-    if (clickTarget.classList.contains('card')) {
+    if (clickTarget.classList.contains('card') && toggledCards.length < 2) {
+        toggleCard(clickTarget);
+        addToggleCard(clickTarget);
+        console.log('open show was toggled');
+        if (toggledCards.length === 2) {
+            console.log('2 cards!');
+        }
+    }
+});
+
+function toggleCard(clickTarget) {
     clickTarget.classList.toggle("open");
     clickTarget.classList.toggle("show");
-    console.log('open show was toggled');
-    }
-});
+}
 
+/*push clickTarget onto toggledCards array*/
 
+function addToggleCard(clickTarget) {
+    toggledCards.push(clickTarget);
+    console.log(toggledCards);
+}
 /*  - display the card's symbol (put this functionality in another function that you call from this one)
  *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
  */
  let toggledCards = [];
+
+ 
  /* 
  *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
+ */
+function checkForMatch() {
+    if (
+        toggledCards[0].firstElementChild.className ===
+        toggledCards[1].firstElementChild.className
+    ) {
+        console.log('match!');
+    } else {
+        console.log('Not a match!');
+    }
+};
+
+deck.addEventListener('click', event => {
+    const clickTarget = event.target;
+    if (toggledCards.length === 2) {
+        checkForMatch();
+        console.log("checked for match");
+    };
+});
+
+
+
+/*    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
  *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
-$(".fa-repeat").click(function(){
-});
