@@ -1,10 +1,6 @@
 /*
  * Create a list that holds all of your cards
  *
-var arr = ['diamond','diamond', 'paper-plane','paper-plane','anchor', 'anchor', 'bolt', 'bolt', 'cube', 'cube','leaf','leaf','bicycle','bicycle','bomb','bomb'];
-arr = shuffle(arr);
-console.log(arr);
-
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -27,6 +23,18 @@ function shuffle(array) {
     return array;
 }
 
+const deck = document.querySelector(".deck");
+
+function shuffleDeck() {
+    const cardsToShuffle = Array.from(document.querySelectorAll('.deck li'));
+    console.log('Cards to shuffle', cardsToShuffle);
+    const shuffledCards = shuffle(cardsToShuffle);
+    console.log('shuffled cards', shuffledCards);
+    for (card of shuffledCards) {
+        deck.appendChild(card);
+    }
+}
+shuffleDeck();
 /*
  * set up the event listener for a card. If a card is clicked:
  */
@@ -34,14 +42,12 @@ function shuffle(array) {
     console.log('The document was clicked');
  }, true);
 
-const deck = document.querySelector(".deck");
-console.log(deck);
-
 
 
 deck.addEventListener('click', event => {
     const clickTarget = event.target;
-    if (clickTarget.classList.contains('card') && toggledCards.length < 2) {
+    if (isClickValid(clickTarget)
+    ) {
         toggleCard(clickTarget);
         addToggleCard(clickTarget);
         console.log('open show was toggled');
@@ -51,9 +57,19 @@ deck.addEventListener('click', event => {
     }
 });
 
-function toggleCard(clickTarget) {
-    clickTarget.classList.toggle("open");
-    clickTarget.classList.toggle("show");
+function isClickValid(clickTarget) {
+    return (
+        clickTarget.classList.contains('card') && 
+        !clickTarget.classList.contains('match') &&
+        toggledCards.length < 2 &&
+        !toggledCards.includes(clickTarget)
+    )
+}
+
+
+function toggleCard(card) {
+    card.classList.toggle("open");
+    card.classList.toggle("show");
 }
 
 /*push clickTarget onto toggledCards array*/
@@ -76,10 +92,18 @@ function checkForMatch() {
         toggledCards[0].firstElementChild.className ===
         toggledCards[1].firstElementChild.className
     ) {
+        toggledCards[0].classList.toggle('match');
+        toggledCards[1].classList.toggle('match');
+        toggledCards = [];
         console.log('match!');
     } else {
         console.log('Not a match!');
-    }
+        setTimeout(() => {
+            toggleCard(toggledCards[0]);
+            toggleCard(toggledCards[1]);
+            toggledCards = [];
+    }, 1000);
+}
 };
 
 deck.addEventListener('click', event => {
