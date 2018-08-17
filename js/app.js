@@ -111,6 +111,7 @@ deck.addEventListener('click', event => {
     if (toggledCards.length === 2) {
         checkForMatch();
         console.log("checked for match");
+        addMove();
     };
 });
 
@@ -119,5 +120,13 @@ deck.addEventListener('click', event => {
 /*    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
  *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
+ */
+let moves = 0;
+function addMove() {
+    moves++;
+    const movesText = document.querySelector('.moves');
+    movesText.innerHTML = moves;
+}
+
+/*    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
