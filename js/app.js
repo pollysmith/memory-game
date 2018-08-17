@@ -35,6 +35,7 @@ function shuffleDeck() {
     }
 }
 shuffleDeck();
+
 /*
  * set up the event listener for a card. If a card is clicked:
  */
@@ -112,6 +113,7 @@ deck.addEventListener('click', event => {
         checkForMatch();
         console.log("checked for match");
         addMove();
+        checkScore();
     };
 });
 
@@ -127,6 +129,27 @@ function addMove() {
     const movesText = document.querySelector('.moves');
     movesText.innerHTML = moves;
 }
+
+/*stars*/
+function checkScore() {
+    if (moves === 16 || moves === 24)
+    {hideStar();
+    }
+}
+
+function hideStar(){
+    const starList = document.querySelectorAll('.fa-star');
+    for (star of starList) {
+        if (star.style.display !== 'none') {
+                star.style.display = 'none';
+            break;
+        }
+    }
+};
+
+
+
+
 
 /*    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
