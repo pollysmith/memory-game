@@ -149,31 +149,25 @@ function hideStar(){
 
 let clockOff = true;
 let time = 0;
-let clockId;
+let clockID;
 
 
 function startClock() {
     clockID = setInterval(() => {
         time++;
         console.log(time);
-    }, 1000);  
+        const clock = document.querySelector('.clock');
+        clock.innerHTML = time;
+    }, 1000);
+    
 }
 
-document.getElementsByClassName(".clock").innerHTML = time;
 
-function displayTime(){
-    let time = 0;
-    const clock = document.querySelector('.clock');
-    console.log(clock);
-    clock.innerHTML = time;
-};
 
 deck.addEventListener('click', function () {
     startClock();
     console.log('clock starts');
 }, {once:true});
-
-displayTime();
 
 /*    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
