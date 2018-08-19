@@ -36,6 +36,7 @@ function shuffleDeck() {
 }
 shuffleDeck();
 
+
 /*
  * set up the event listener for a card. If a card is clicked:
  */
@@ -51,7 +52,7 @@ deck.addEventListener('click', event => {
     ) {
         toggleCard(clickTarget);
         addToggleCard(clickTarget);
-        console.log('open show was toggled');
+        console.log('open show was toggled');   
         if (toggledCards.length === 2) {
             console.log('2 cards!');
         }
@@ -66,7 +67,6 @@ function isClickValid(clickTarget) {
         !toggledCards.includes(clickTarget)
     )
 }
-
 
 function toggleCard(card) {
     card.classList.toggle("open");
@@ -117,8 +117,6 @@ deck.addEventListener('click', event => {
     };
 });
 
-
-
 /*    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
  *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
@@ -147,9 +145,35 @@ function hideStar(){
     }
 };
 
+/*clock*/
+
+let clockOff = true;
+let time = 0;
+let clockId;
 
 
+function startClock() {
+    clockID = setInterval(() => {
+        time++;
+        console.log(time);
+    }, 1000);  
+}
 
+document.getElementsByClassName(".clock").innerHTML = time;
+
+function displayTime(){
+    let time = 0;
+    const clock = document.querySelector('.clock');
+    console.log(clock);
+    clock.innerHTML = time;
+};
+
+deck.addEventListener('click', function () {
+    startClock();
+    console.log('clock starts');
+}, {once:true});
+
+displayTime();
 
 /*    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
