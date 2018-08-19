@@ -157,7 +157,14 @@ function startClock() {
         time++;
         console.log(time);
         const clock = document.querySelector('.clock');
-        clock.innerHTML = time;
+        const minutes = Math.floor(time/60);
+        const seconds = time % 60;
+        if (seconds < 10) {
+            clock.innerHTML = ((minutes)+":0"+(seconds))
+        }
+        else{
+        clock.innerHTML = ((minutes)+":"+(seconds))
+        }
     }, 1000);
     
 }
