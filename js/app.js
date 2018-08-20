@@ -40,24 +40,11 @@ shuffleDeck();
 /*
  * set up the event listener for a card. If a card is clicked:
  */
- document.addEventListener('click', function () {
+document.addEventListener('click', function () {
     console.log('The document was clicked');
  }, true);
 
 
-
-deck.addEventListener('click', event => {
-    const clickTarget = event.target;
-    if (isClickValid(clickTarget)
-    ) {
-        toggleCard(clickTarget);
-        addToggleCard(clickTarget);
-        console.log('open show was toggled');   
-        if (toggledCards.length === 2) {
-            console.log('2 cards!');
-        }
-    }
-});
 
 function isClickValid(clickTarget) {
     return (
@@ -82,34 +69,36 @@ function addToggleCard(clickTarget) {
 /*  - display the card's symbol (put this functionality in another function that you call from this one)
  *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
  */
- let toggledCards = [];
-
+let toggledCards = [];
+let checkingForMatch = false;
  
  /* 
  *  - if the list already has another card, check to see if the two cards match
  */
 function checkForMatch() {
+    checkingForMatch = true;
     if (
         toggledCards[0].firstElementChild.className ===
         toggledCards[1].firstElementChild.className
     ) {
-        toggledCards[0].classList.toggle('match');
-        toggledCards[1].classList.toggle('match');
         toggledCards = [];
         console.log('match!');
+        checkingForMatch = false;
+
     } else {
         console.log('Not a match!');
         setTimeout(() => {
             toggleCard(toggledCards[0]);
             toggleCard(toggledCards[1]);
             toggledCards = [];
-    }, 1000);
-}
+            checkingForMatch = false;
+        }, 250);
+    }
 };
 
 deck.addEventListener('click', event => {
     const clickTarget = event.target;
-    if (toggledCards.length === 2) {
+    if (toggledCards.length === 2 && !checkingForMatch) {
         checkForMatch();
         console.log("checked for match");
         addMove();
@@ -117,6 +106,25 @@ deck.addEventListener('click', event => {
     };
 });
 
+
+deck.addEventListener('click', event => {
+    const clickTarget = event.target;
+    if (isClickValid(clickTarget) && toggledCards.length < 2 && !checkingForMatch
+    ) {
+        toggleCard(clickTarget);
+        addToggleCard(clickTarget);
+        console.log('open show was toggled');   
+        if (toggledCards.length === 2) {
+            console.log('2 cards!');
+            if (
+                toggledCards[0].firstElementChild.className ===
+                toggledCards[1].firstElementChild.className
+            ) {
+                toggledCards[0].classList.toggle('match');
+                toggledCards[1].classList.toggle('match');
+        }
+    }
+}});
 /*    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
  *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
@@ -169,12 +177,13 @@ function startClock() {
     
 }
 
-
-
 deck.addEventListener('click', function () {
     startClock();
     console.log('clock starts');
 }, {once:true});
 
+function stopClock() {
+    clearInterval(clockId)
+}
 /*    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
