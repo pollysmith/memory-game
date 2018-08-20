@@ -187,3 +187,13 @@ function stopClock() {
 }
 /*    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+ function toggleModal() {
+     const modal = document.querySelector('.modal_background');
+     modal.classList.toggle('hide');
+ }
+
+ toggleModal()
+
+
+
