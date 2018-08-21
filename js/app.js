@@ -193,7 +193,46 @@ function stopClock() {
      modal.classList.toggle('hide');
  }
 
- toggleModal()
+ function writeModalStats() {
+     const timeStat = document.querySelector('.modal_time');
+     const clockTime = document.querySelector('.clock').innerHTML;
+     const movesStat = document.querySelector('.modal_moves');
+     const starsStat = document.querySelector('.modal_stars');
+     const stars = getStars();
 
 
+     timeStat.innerHTML = 'Time = ' + clockTime; 
+     movesStat.innerHTML = 'Moves = ' + moves;
+     starsStat.innerHTML = 'Stars = ' + stars;
+ }
 
+ writeModalStats();
+ toggleModal();
+
+
+ function getStars(){
+    stars = document.querySelectorAll('.stars li');
+    starCount = 0;
+    for (star of stars) {
+        if (star.style.display !== 'none') {
+            starCount++;
+        }
+    }
+    console.log(starCount);
+    return starCount;
+};
+
+document.querySelector('.modal_cancel').addEventListener('click', () => {
+    toggleModal();
+})
+
+
+document.querySelector('.modal_replay').addEventListener('click', () => {
+    console.log('replay');
+    resetGame();
+})
+
+function resetGame() {
+    stop
+
+}
