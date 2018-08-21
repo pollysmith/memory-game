@@ -234,6 +234,8 @@ document.querySelector('.modal_close').addEventListener('click', () => {
 
 document.querySelector('.modal_replay').addEventListener('click', () => {
     resetGame();
+    toggleModal();
+
 })
 
 function resetGame() {
@@ -246,8 +248,8 @@ function resetGame() {
 
 function resetClockandTime() {
     stopClock();
+    document.querySelector('.clock').innerHTML = 0;
     clockOff = true;
-    time = 0;
 }
 
 function resetMoves() {
@@ -262,8 +264,9 @@ function resetStars() {
         star.style.display = 'inline';
     }
 }
-
-document.querySelector('.restart').addEventListener('click', resetGame());
+document.querySelector('.restart').addEventListener('click', () => { 
+    resetGame();
+});
 
 let matched = 0;
 const TOTAL_PAIRS = 8;
