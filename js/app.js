@@ -82,9 +82,7 @@ function checkForMatch() {
         toggledCards[1].firstElementChild.className
     ) {
         toggledCards = [];
-        console.log('match!');
         checkingForMatch = false;
-
     } else {
         console.log('Not a match!');
         setTimeout(() => {
@@ -122,9 +120,16 @@ deck.addEventListener('click', event => {
             ) {
                 toggledCards[0].classList.toggle('match');
                 toggledCards[1].classList.toggle('match');
+                console.log('match!');
+                matched++;
+                if (matched === TOTAL_PAIRS){
+                    gameOver();
+                    console.log('you win!');
+                }            
+            }
         }
     }
-}});
+});
 /*    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
  *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
@@ -162,6 +167,7 @@ let clockID;
 
 function startClock() {
     clockID = setInterval(() => {
+        clockOff = false;
         time++;
         console.log(time);
         const clock = document.querySelector('.clock');
@@ -183,7 +189,7 @@ deck.addEventListener('click', function () {
 }, {once:true});
 
 function stopClock() {
-    clearInterval(clockId)
+    clearInterval(clockID);
 }
 /*    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
@@ -206,12 +212,8 @@ function stopClock() {
      starsStat.innerHTML = 'Stars = ' + stars;
  }
 
- writeModalStats();
- toggleModal();
-
-
  function getStars(){
-    stars = document.querySelectorAll('.stars li');
+    stars = document.querySelectorAll('.fa-star');
     starCount = 0;
     for (star of stars) {
         if (star.style.display !== 'none') {
@@ -226,13 +228,55 @@ document.querySelector('.modal_cancel').addEventListener('click', () => {
     toggleModal();
 })
 
+document.querySelector('.modal_close').addEventListener('click', () => {
+    toggleModal();
+})
 
 document.querySelector('.modal_replay').addEventListener('click', () => {
-    console.log('replay');
     resetGame();
 })
 
 function resetGame() {
-    stop
+    resetClockandTime();
+    resetMoves();
+    resetStars();
+    shuffleDeck();
+    resetCards();
+}
 
+function resetClockandTime() {
+    stopClock();
+    clockOff = true;
+    time = 0;
+}
+
+function resetMoves() {
+    moves =0;
+    document.querySelector('.moves').innerHTML = moves;
+}
+
+function resetStars() {
+    stars = 0;
+    const starList = document.querySelectorAll('.stars li'); 
+    for (star of starList) {
+        star.style.display = 'inline';
+    }
+}
+
+document.querySelector('.restart').addEventListener('click', resetGame());
+
+let matched = 0;
+const TOTAL_PAIRS = 8;
+
+function gameOver() {
+    stopClock();
+    writeModalStats();
+    toggleModal();
+}
+
+function resetCards() {
+    const cards = document.querySelectorAll('.deck li');
+    for (let card of cards) {
+        card.className = 'card';
+    }
 }
