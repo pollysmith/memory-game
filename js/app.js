@@ -90,14 +90,13 @@ function checkForMatch() {
             toggleCard(toggledCards[1]);
             toggledCards = [];
             checkingForMatch = false;
-        }, 250);
+        }, 1000);
     }
 };
 
 deck.addEventListener('click', event => {
     const clickTarget = event.target;
     if (toggledCards.length === 2 && !checkingForMatch) {
-        checkForMatch();
         console.log("checked for match");
         addMove();
         checkScore();
@@ -113,6 +112,7 @@ deck.addEventListener('click', event => {
         addToggleCard(clickTarget);
         console.log('open show was toggled');   
         if (toggledCards.length === 2) {
+            checkForMatch();
             console.log('2 cards!');
             if (
                 toggledCards[0].firstElementChild.className ===
